@@ -7,6 +7,7 @@ class VertexInterface:
     def interface_loop():
         while True:
             print("Deseja inserir um vértice?(s/n)(max 20):")
+            print(f"Quantidade já criada: {Vertex.get_total_ammount()}")
             letter = input()
 
             if letter == "s":
@@ -46,19 +47,19 @@ class EdgeInterface:
             letter = input()
 
             if letter == "s":
-                print("Insira o peso da aresta")
-                weight = input()
-
-                print("Insira o nome de um dos vértices")
                 try:
+                    print("Insira o peso da aresta")
+                    weight = int(input())
+
+                    print("Insira o nome de um dos vértices")
                     vertex1 = EdgeInterface.handle_vertex_input()
-                except Exception as e:
-                    print(e)
-                    continue
 
-                print("Insira o nome de outro vértice")
-                try:
+                    print("Insira o nome de outro vértice")
                     vertex2 = EdgeInterface.handle_vertex_input()
+
+                except ValueError:
+                    print("Insira somente numeros inteiros")
+                    continue
                 except Exception as e:
                     print(e)
                     continue
