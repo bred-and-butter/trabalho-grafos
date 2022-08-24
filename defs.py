@@ -27,13 +27,9 @@ class Vertex:
 
 
 class Edge:
-    def __init__(self, weight: int, vertex1: Vertex, vertex2: Vertex) -> None:
+    def __init__(self, weight: int, destination: Vertex) -> None:
         self.weight = weight
-        self.vertex1 = vertex1
-        self.vertex2 = vertex2
-
-        self.vertex1.edges.append(self)
-        self.vertex2.edges.append(self)
+        self.destination = destination
 
     def __str__(self) -> str:
-        return f"{self.vertex1} ---{self.weight}--- {self.vertex2}"
+        return f"{self.weight}---> {self.destination}"

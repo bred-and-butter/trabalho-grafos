@@ -37,12 +37,19 @@ class VertexInterface:
         for vertex in VertexInterface.__vertex_list:
             print(vertex)
 
+    def print_adjacency_list():
+        print("Imprimindo lista de adjacência:")
+        for vertex in VertexInterface.__vertex_list:
+            print(vertex)
+            for edge in vertex.edges:
+                print("   ", edge)
+
 
 class EdgeInterface:
-    __edge_list: list[Edge] = []
-
     def interface_loop():
         while True:
+            VertexInterface.print_adjacency_list()
+
             print("Deseja inserir uma aresta?(s/n)")
             letter = input()
 
@@ -51,21 +58,24 @@ class EdgeInterface:
                     print("Insira o peso da aresta")
                     weight = int(input())
 
-                    print("Insira o nome de um dos vértices")
+                    print("Insira o nome do vértice fonte")
                     vertex1 = EdgeInterface.handle_vertex_input()
 
-                    print("Insira o nome de outro vértice")
+                    print("Insira o nome do vértice destino")
                     vertex2 = EdgeInterface.handle_vertex_input()
 
+                    print("Unidirecional?(s/n)")
+                    directed = input()
+
                 except ValueError:
-                    print("Insira somente numeros inteiros")
+                    print("Insira somente números inteiros")
                     continue
                 except Exception as e:
                     print(e)
                     continue
 
-                EdgeInterface.__edge_list.append(
-                    Edge(weight=weight, vertex1=vertex1, vertex2=vertex2)
+                EdgeInterface.connect_vertexes(
+                    weight=weight, vertex1=vertex1, vertex2=vertex2, directed=directed
                 )
 
             elif letter == "n":
@@ -75,7 +85,17 @@ class EdgeInterface:
         value = input()
         return VertexInterface.get_vertex(value)
 
-    def print_edges():
-        print("Imprimindo arestas criadas:")
-        for edge in EdgeInterface.__edge_list:
-            print(edge)
+    def connect_vertexes(weight: int, vertex1: Vertex, vertex2: Vertex, directed: str):
+        if directed == "s":
+            vertex1.edges.append(
+                Edge(weight=weight, destination=vertex2)
+            )
+
+        elif directed == "n":
+            vertex1.edges.append(
+                Edge(weight=weight, destination=vertex2)
+            )
+
+            vertex2.edges.append(
+                Edge(weight=weight, destination=vertex1)
+            )
