@@ -1,8 +1,8 @@
-from defs import Vertex, Edge
+from definitions import Vertex, Edge
 
 
 class VertexInterface:
-    __vertex_list: list[Vertex] = []
+    vertex_list: list[Vertex] = []
 
     def interface_loop():
         while True:
@@ -20,26 +20,30 @@ class VertexInterface:
 
     def create_vertex(value):
         if Vertex.is_value_free(value):
-            VertexInterface.__vertex_list.append(Vertex(value=value, edges=[]))
+            VertexInterface.vertex_list.append(Vertex(value=value, edges=[]))
         else:
             print("Nome já pertence a outro vértice")
 
     def get_vertex(value):
         if not Vertex.is_value_free(value):
-            for vertex in VertexInterface.__vertex_list:
+            for vertex in VertexInterface.vertex_list:
                 if vertex.value == value:
                     return vertex
 
         raise Exception("Vertice não encontrado")
 
+    def uncheck_vertexes():
+        for vertex in VertexInterface.vertex_list:
+            vertex.checked = False
+
     def print_vertexes():
         print("Imprimindo vértices criados:")
-        for vertex in VertexInterface.__vertex_list:
+        for vertex in VertexInterface.vertex_list:
             print(vertex)
 
     def print_adjacency_list():
         print("Imprimindo lista de adjacência:")
-        for vertex in VertexInterface.__vertex_list:
+        for vertex in VertexInterface.vertex_list:
             print(vertex)
             for edge in vertex.edges:
                 print("   ", edge)
@@ -64,7 +68,7 @@ class EdgeInterface:
                     print("Insira o nome do vértice destino")
                     vertex2 = EdgeInterface.handle_vertex_input()
 
-                    print("Unidirecional?(s/n)")
+                    print("Direcionado?(s/n)")
                     directed = input()
 
                 except ValueError:

@@ -12,3 +12,5 @@ Fazer a leitura dos pesos das arestas de cada vértice
 Considerar sempre vértices positivos
 
 Mostrar os dados armazenados
+
+Agora devo executar o dijkstra em um grafo criado
