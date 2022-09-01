@@ -32,10 +32,6 @@ class VertexInterface:
 
         raise Exception("Vertice não encontrado")
 
-    def uncheck_vertexes():
-        for vertex in VertexInterface.vertex_list:
-            vertex.checked = False
-
     def print_vertexes():
         print("Imprimindo vértices criados:")
         for vertex in VertexInterface.vertex_list:
@@ -91,15 +87,9 @@ class EdgeInterface:
 
     def connect_vertexes(weight: int, vertex1: Vertex, vertex2: Vertex, directed: str):
         if directed == "s":
-            vertex1.edges.append(
-                Edge(weight=weight, destination=vertex2)
-            )
+            vertex1.edges.append(Edge(weight=weight, destination=vertex2))
 
         elif directed == "n":
-            vertex1.edges.append(
-                Edge(weight=weight, destination=vertex2)
-            )
+            vertex1.edges.append(Edge(weight=weight, destination=vertex2))
 
-            vertex2.edges.append(
-                Edge(weight=weight, destination=vertex1)
-            )
+            vertex2.edges.append(Edge(weight=weight, destination=vertex1))

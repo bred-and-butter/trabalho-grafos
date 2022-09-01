@@ -17,7 +17,6 @@ class Vertex:
 
         self.value = value
         self.edges = edges
-        self.checked = False
 
         Vertex.__total_ammount += 1
         Vertex.__unique_value_list.append(self.value)
