@@ -1,4 +1,7 @@
 # trabalho-grafos
+
+Integrantes: Frederico Hoffmann Larangeira, Jorge Alaniz Junior e Pedro Kuhn Volz
+
 Trabalho da faculdade sobre grafos em python:
 
 Implementar um programa na linguagem de sua escolha, que permita a representação em memória de um grafo.
@@ -13,4 +16,10 @@ Considerar sempre vértices positivos
 
 Mostrar os dados armazenados
 
-Agora devo executar o dijkstra em um grafo criado
+Agora deve ser executado o algoritmo de dijkstra em um grafo criado
+
+Para executar o programa:
+
+python main.py p/executar o arquivo principal e criar um grafo manualmente
+
+python test_dijkstra.py p/ executar o arquivo de teste, que possui um grafo pronto
