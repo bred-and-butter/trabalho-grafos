@@ -18,10 +18,10 @@ class Dijkstra:
 
         Dijkstra.search_next_vertex(start, 0)
 
-        PathTable.show_paths()
+        PathTable.show_table()
 
     def search_next_vertex(vertex: Vertex, current_path_weight: int):  # recursivo
-        PathTable.update_paths(vertex, current_path_weight)
+        PathTable.update_table(vertex, current_path_weight)
 
         edge = Dijkstra.find_smallest_edge(vertex)
         if edge:
@@ -43,32 +43,41 @@ class Dijkstra:
 
 
 class PathTable:
+    __values_from_start: dict = {}
     __shortest_paths: dict = {}
 
     def init_table(start: Vertex):
         for vertex in VertexInterface.vertex_list:
             if vertex == start:
-                PathTable.__shortest_paths[vertex] = 0
+                PathTable.__values_from_start[vertex] = 0
             else:
-                PathTable.__shortest_paths[vertex] = None
+                PathTable.__values_from_start[vertex] = None
+
+    def show_table():
+        for vertex, value in PathTable.__values_from_start.items():
+            print(vertex, ' : ', value)
 
     def show_paths():
         for vertex, path in PathTable.__shortest_paths.items():
             print(vertex, ' : ', path)
 
-    def update_paths(vertex: Vertex, current_path_weight: int):
+    def update_table(vertex: Vertex, current_path_weight: int):
         for edge in vertex.edges:
             total_weight_to_vertex = current_path_weight + edge.weight
             try:
                 if (
-                    PathTable.__shortest_paths[edge.destination] == None
+                    PathTable.__values_from_start[edge.destination] == None
                     or total_weight_to_vertex
-                    < PathTable.__shortest_paths[edge.destination]
+                    < PathTable.__values_from_start[edge.destination]
                 ):
-                    PathTable.__shortest_paths[edge.destination] = total_weight_to_vertex
+                    PathTable.__values_from_start[edge.destination] = total_weight_to_vertex
+                    print(f"{vertex}--{edge}")
             except KeyError:
                 print("Erro! Tentativa de atualizar vértice que não existe na tabela")
                 exit()
+
+    def update_paths(vertex_before: Vertex, edge: Edge, destination_vertex: Vertex):
+        pass
 
 
 class UnvisitedList:
