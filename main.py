@@ -6,6 +6,10 @@ VertexInterface.print_vertexes()
 EdgeInterface.interface_loop()
 VertexInterface.print_adjacency_list()
 
-print("Rodando dijkstra")
+choice = "s"
 
-Dijkstra.run()
+while choice == "s":
+    print("Rodar Dijkstra?(s/n)")
+    choice = input()
+
+    Dijkstra.run()

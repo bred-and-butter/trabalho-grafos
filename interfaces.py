@@ -58,6 +58,9 @@ class EdgeInterface:
                     print("Insira o peso da aresta")
                     weight = int(input())
 
+                    if weight < 0:
+                        raise Exception("Insira apenas pesos positivos")
+
                     print("Insira o nome do vértice fonte")
                     vertex1 = EdgeInterface.handle_vertex_input()
 

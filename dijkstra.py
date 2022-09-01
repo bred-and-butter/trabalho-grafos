@@ -1,12 +1,8 @@
 from interfaces import VertexInterface
 from definitions import Vertex, Edge
 
-from copy import deepcopy
-
 
 class Dijkstra:
-    __result_graph: list
-
     def run():
         print("Escolha o vértice de partida:")
         value = input()
@@ -17,23 +13,23 @@ class Dijkstra:
             print(e)
             return
 
-        PathTable.init_SPD(start)
+        PathTable.init_table(start)
         UnvisitedList.init_list()
 
-        Dijkstra.__result_graph = Dijkstra.search_next_vertex(start, 0)
+        Dijkstra.search_next_vertex(start, 0)
 
+        PathTable.show_paths()
 
-    def search_next_vertex(vertex: Vertex, current_path_weight: int) -> list:  # recursivo
+    def search_next_vertex(vertex: Vertex, current_path_weight: int):  # recursivo
         PathTable.update_paths(vertex, current_path_weight)
 
         edge = Dijkstra.find_smallest_edge(vertex)
         if edge:
-            Dijkstra.search_next_vertex(edge.destination, edge.weight + current_path_weight)
+            Dijkstra.search_next_vertex(
+                edge.destination, edge.weight + current_path_weight)
             UnvisitedList.mark_as_visited(vertex)
-            return []
 
-        return []
-
+        return
 
     def find_smallest_edge(vertex: Vertex) -> Edge | None:
         smallest: Edge = None
@@ -49,7 +45,7 @@ class Dijkstra:
 class PathTable:
     __shortest_paths: dict = {}
 
-    def init_SPD(start: Vertex):
+    def init_table(start: Vertex):
         for vertex in VertexInterface.vertex_list:
             if vertex == start:
                 PathTable.__shortest_paths[vertex] = 0
@@ -57,8 +53,8 @@ class PathTable:
                 PathTable.__shortest_paths[vertex] = None
 
     def show_paths():
-        for path in PathTable.__shortest_paths:
-            print(path)
+        for vertex, path in PathTable.__shortest_paths.items():
+            print(vertex, ' : ', path)
 
     def update_paths(vertex: Vertex, current_path_weight: int):
         for edge in vertex.edges:
@@ -69,8 +65,8 @@ class PathTable:
                     or total_weight_to_vertex
                     < PathTable.__shortest_paths[edge.destination]
                 ):
-                    PathTable.__shortest_paths[edge.destination] = edge.weight
-            except KeyError as e:
+                    PathTable.__shortest_paths[edge.destination] = total_weight_to_vertex
+            except KeyError:
                 print("Erro! Tentativa de atualizar vértice que não existe na tabela")
                 exit()
 
