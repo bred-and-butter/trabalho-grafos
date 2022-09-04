@@ -21,7 +21,7 @@ EdgeInterface.connect_vertexes(weight=6, vertex1=a, vertex2=e, directed="s")
 EdgeInterface.connect_vertexes(weight=7, vertex1=b, vertex2=d, directed="s")
 EdgeInterface.connect_vertexes(weight=9, vertex1=b, vertex2=e, directed="s")
 EdgeInterface.connect_vertexes(weight=1, vertex1=c, vertex2=e, directed="s")
-EdgeInterface.connect_vertexes(weight=6, vertex1=c, vertex2=d, directed="s")
+EdgeInterface.connect_vertexes(weight=8, vertex1=c, vertex2=d, directed="s")
 EdgeInterface.connect_vertexes(weight=3, vertex1=c, vertex2=b, directed="s")
 EdgeInterface.connect_vertexes(weight=8, vertex1=d, vertex2=a, directed="s")
 
