@@ -23,13 +23,12 @@ class Dijkstra:
     def search_next_vertex(vertex: Vertex, current_path_weight: int):  # recursivo
         PathTable.update_table(vertex, current_path_weight)
 
-        edge = Dijkstra.find_smallest_edge(vertex)
-        if edge:
+        while Dijkstra.has_remaining_paths(vertex):     # erro de recursao por aqui em algum lugar
+            edge = Dijkstra.find_smallest_edge(vertex)
             Dijkstra.search_next_vertex(
                 edge.destination, edge.weight + current_path_weight)
-            UnvisitedList.mark_as_visited(vertex)
+            UnvisitedList.mark_as_visited(edge.destination)
 
-        return
 
     def find_smallest_edge(vertex: Vertex) -> Edge | None:
         smallest: Edge = None
@@ -40,6 +39,13 @@ class Dijkstra:
                     smallest = edge
 
         return smallest
+
+    def has_remaining_paths(vertex: Vertex) -> bool:
+        for edge in vertex.edges:
+            if UnvisitedList.is_unvisited(edge.destination):
+                return True
+
+        return False
 
 
 class PathTable:
@@ -71,7 +77,6 @@ class PathTable:
                     < PathTable.__values_from_start[edge.destination]
                 ):
                     PathTable.__values_from_start[edge.destination] = total_weight_to_vertex
-                    print(f"{vertex}--{edge}")
             except KeyError:
                 print("Erro! Tentativa de atualizar vértice que não existe na tabela")
                 exit()
