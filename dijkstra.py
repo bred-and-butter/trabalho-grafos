@@ -18,6 +18,7 @@ class Dijkstra:
 
         Dijkstra.search_next_vertex(start, 0)
 
+        PathDiagram.show_paths()
         PathTable.show_table()
 
     def search_next_vertex(vertex: Vertex, current_path_weight: int):  # recursivo
@@ -28,8 +29,6 @@ class Dijkstra:
             edge = Dijkstra.find_smallest_edge(vertex)
             Dijkstra.search_next_vertex(
                 edge.destination, edge.weight + current_path_weight)
-
-        return
 
     def find_smallest_edge(vertex: Vertex) -> Edge | None:
         smallest: Edge = None
@@ -51,7 +50,6 @@ class Dijkstra:
 
 class PathTable:
     __values_from_start: dict = {}
-    __shortest_paths: dict = {}
 
     def init_table(start: Vertex):
         for vertex in VertexInterface.vertex_list:
@@ -64,10 +62,6 @@ class PathTable:
         for vertex, value in PathTable.__values_from_start.items():
             print(vertex, ' : ', value)
 
-    def show_paths():
-        for vertex, path in PathTable.__shortest_paths.items():
-            print(vertex, ' : ', path)
-
     def update_table(vertex: Vertex, current_path_weight: int):
         for edge in vertex.edges:
             total_weight_to_vertex = current_path_weight + edge.weight
@@ -78,12 +72,28 @@ class PathTable:
                     < PathTable.__values_from_start[edge.destination]
                 ):
                     PathTable.__values_from_start[edge.destination] = total_weight_to_vertex
+                    PathDiagram.update_path(vertex, edge)
             except KeyError:
                 print("Erro! Tentativa de atualizar vértice que não existe na tabela")
                 exit()
 
-    def update_paths(vertex_before: Vertex, edge: Edge, destination_vertex: Vertex):
-        pass
+
+class PathDiagram:
+    __shortest_paths: dict = {}
+
+    def init_diagram(start: Vertex):
+        for vertex in VertexInterface.vertex_list:
+            if vertex == start:
+                PathDiagram.__shortest_paths[vertex] = 0
+            else:
+                PathDiagram.__shortest_paths[vertex] = None
+
+    def update_path(vertex: Vertex, edge: Edge):
+        PathDiagram.__shortest_paths[edge.destination] = f"{vertex}--{edge}"
+
+    def show_paths():
+        for vertex, path in PathDiagram.__shortest_paths.items():
+            print(vertex, ' : ', path)
 
 
 class UnvisitedList:
