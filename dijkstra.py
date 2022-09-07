@@ -22,13 +22,14 @@ class Dijkstra:
 
     def search_next_vertex(vertex: Vertex, current_path_weight: int):  # recursivo
         PathTable.update_table(vertex, current_path_weight)
+        UnvisitedList.mark_as_visited(vertex)
 
-        while Dijkstra.has_remaining_paths(vertex):     # erro de recursao por aqui em algum lugar
+        while Dijkstra.has_remaining_paths(vertex):
             edge = Dijkstra.find_smallest_edge(vertex)
             Dijkstra.search_next_vertex(
                 edge.destination, edge.weight + current_path_weight)
-            UnvisitedList.mark_as_visited(edge.destination)
 
+        return
 
     def find_smallest_edge(vertex: Vertex) -> Edge | None:
         smallest: Edge = None
